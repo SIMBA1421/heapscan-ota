@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <title>HeapScan — Install</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -37,7 +40,19 @@
     font-size: 36px;
   }
   h1 { font-size: 24px; margin-bottom: 8px; }
-  .version { color: #8b949e; font-size: 14px; margin-bottom: 24px; }
+  .version { 
+    color: #8b949e; 
+    font-size: 14px; 
+    margin-bottom: 24px; 
+  }
+  .version-note {
+    color: #58a6ff;
+    font-size: 12px;
+    margin-bottom: 16px;
+    padding: 8px;
+    background: rgba(88, 166, 255, 0.1);
+    border-radius: 8px;
+  }
   .install-btn {
     display: inline-block;
     background: #2ea043;
@@ -50,11 +65,28 @@
     transition: background 0.2s;
   }
   .install-btn:hover { background: #3fb950; }
+  .refresh-btn {
+    display: inline-block;
+    background: #1f6feb;
+    color: white;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 14px;
+    text-decoration: none;
+    margin-top: 16px;
+    border: none;
+    cursor: pointer;
+  }
   .note {
     margin-top: 24px;
     font-size: 12px;
     color: #8b949e;
     line-height: 1.6;
+  }
+  .cache-info {
+    margin-top: 16px;
+    font-size: 11px;
+    color: #6e7681;
   }
 </style>
 </head>
@@ -62,16 +94,51 @@
 <div class="card">
   <div class="icon">&#9968;</div>
   <h1>HeapScan</h1>
-  <p class="version">Version J-1.0.2 (Hybrid Fusion)</p>
-  <a class="install-btn" href="itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/SIMBA1421/heapscan-ota/main/manifest.plist">
+  <p class="version" id="version">Loading version...</p>
+  <p class="version-note">Use Cloud Server button added!</p>
+  <a class="install-btn" id="installBtn" href="#">
     Install
   </a>
+  <button class="refresh-btn" onclick="forceRefresh()">
+    &#x21bb; Force Refresh (if old version)
+  </button>
   <p class="note">
-    Open this page in Safari on your iPhone.<br>
+    Open this page in <strong>Safari</strong> on your iPhone.<br>
     Tap Install, then go to:<br>
     Settings &gt; General &gt; VPN &amp; Device Management<br>
     to trust the profile.
   </p>
+  <p class="cache-info" id="cacheInfo"></p>
 </div>
+
+<script>
+// Cache-busting timestamp
+const timestamp = new Date().getTime();
+const buildDate = "2026-02-14 19:42 UTC";
+const version = "J-2.1.9";
+
+// Update version display
+document.getElementById('version').textContent = 'Version ' + version + ' (Latest)';
+
+// Set install link with cache busting
+document.getElementById('installBtn').href = 
+  'itms-services://?action=download-manifest&url=https://raw.githubusercontent.com/SIMBA1421/heapscan-ota/main/manifest.plist?t=' + timestamp;
+
+// Show cache info
+document.getElementById('cacheInfo').textContent = 'Built: ' + buildDate;
+
+// Force refresh function
+function forceRefresh() {
+  const newUrl = window.location.href.split('?')[0] + '?force=' + new Date().getTime();
+  window.location.href = newUrl;
+}
+
+// Auto-refresh if page is older than 5 minutes
+if (window.location.search.indexOf('force=') === -1) {
+  setTimeout(function() {
+    forceRefresh();
+  }, 100); // Small delay to let page render first
+}
+</script>
 </body>
 </html>
