@@ -13,6 +13,22 @@
 					<key>url</key>
 					<string>https://simba1421.github.io/heapscan-ota/HeapScan.ipa</string>
 				</dict>
+				<dict>
+					<key>kind</key>
+					<string>display-image</string>
+					<key>needs-shine</key>
+					<true/>
+					<key>url</key>
+					<string>https://simba1421.github.io/heapscan-ota/icon57.png</string>
+				</dict>
+				<dict>
+					<key>kind</key>
+					<string>full-size-image</string>
+					<key>needs-shine</key>
+					<true/>
+					<key>url</key>
+					<string>https://simba1421.github.io/heapscan-ota/icon512.png</string>
+				</dict>
 			</array>
 			<key>metadata</key>
 			<dict>
@@ -23,7 +39,7 @@
 				<key>kind</key>
 				<string>software</string>
 				<key>title</key>
-				<string>HeapScan J-2.1.9</string>
+				<string>HeapScan</string>
 			</dict>
 		</dict>
 	</array>
